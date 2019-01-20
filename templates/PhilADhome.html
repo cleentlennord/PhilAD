@@ -22,21 +22,42 @@
           {{form.address()}}
         </div>
         <div class="submit-div">
-          {{form.submit()}}
+          <button id = "submit">Submit</button>
         </div>
       </form>
     </div>
     <div class="result">
-        <label for="barangay">Barangay</label>
-        <textarea id="barangay" class="textarea"></textarea>
-        <label for="city" class="textarea">City</label>
-        <textarea id="city" class="textarea"></textarea>
-        <label for="province" class="textarea">Province</label>
-        <textarea id="province" class="textarea"></textarea>
-        <label for="region">Region</label>
-        <textarea id="region" class="textarea"></textarea>
+        <label for = "barangay">Barangay</label>
+        <textarea id = "barangay" class = "textarea" value = "prediction" ></textarea>
+        <label for = "city" class = "textarea">City</label>
+        {{prediction}}
+        <textarea id = "city" class = "textarea"></textarea>
+        <label for = "province" class = "textarea">Province</label>
+        <textarea id = "province" class = "textarea"></textarea>
+        <label for = "region">Region</label>
+        <textarea id = "region" class="textarea"></textarea>
     </div>
   </div>
 
 </body>
 </html>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script type="text/javascript">
+object.onclick = function(){
+  window.onload = function() {
+  	// setup the button click
+  	document.getElementById("submit").onclick = function() {
+  		doWork()
+  	};
+  }
+function doWork() {
+	// ajax the JSON to the server
+	$.post("predict", {{form.address()}}, function(){
+
+	});
+	// stop link reloading the page
+ event.preventDefault();
+}
+};
+</script>
