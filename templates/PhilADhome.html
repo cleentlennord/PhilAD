@@ -28,14 +28,13 @@
     </div>
     <div class="result">
         <label for = "barangay">Barangay</label>
-        <textarea id = "barangay" class = "textarea" value = "prediction" ></textarea>
+        <textarea id = "barangay" class = "textarea" value = "barangay" ></textarea>
         <label for = "city" class = "textarea">City</label>
-        {{prediction}}
-        <textarea id = "city" class = "textarea"></textarea>
+        <textarea id = "city" class = "textarea" value = "city"></textarea>
         <label for = "province" class = "textarea">Province</label>
-        <textarea id = "province" class = "textarea"></textarea>
+        <textarea id = "province" class = "textarea" value = province></textarea>
         <label for = "region">Region</label>
-        <textarea id = "region" class="textarea"></textarea>
+        <textarea id = "region" class="textarea" value = "region"></textarea>
     </div>
   </div>
 
@@ -54,6 +53,22 @@
                 type: 'POST',
                 success: function(response) {
                     console.log(response);
+                    try:
+                      if (output.items = output['barangay']){
+                        $('#barangay') = output['barangay']
+                      }
+                      if (output.items = output['city']){
+                        $('#city') = output['city']
+                      }
+                      if (output.items = output['province']){
+                        output['province'] = ('#province')
+                      }
+                      if (output.items = output['region']){
+                        output['region'] = ('#region')
+                      }
+                      else {
+                        console.error('no data found');
+                      }
                 },
                 error: function(error) {
                     console.log(error);

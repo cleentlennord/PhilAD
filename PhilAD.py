@@ -17,7 +17,6 @@ app.config['SECRET_KEY'] = '601bbfb9d4c8e0a4a0a66d8f9b2f79cd'
 ##forms##
 class Address(FlaskForm):
     address = StringField('Input Address')
-    submit = SubmitField('Submit')
 
 @app.route('/predict', methods=['POST'])
 def predict():
@@ -32,6 +31,10 @@ def predict():
     else:
         print ('Train the model first')
         return 500, 'Model Not Found'
+
+    output = json.dumps(prediction)
+    output = dict(itertools.zip_longest(*[iter(prediction)] * 2, fillvalue=""))
+    return output
 
 
 ##start website##
