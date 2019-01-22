@@ -1,56 +1,268 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
+<head>
 
-    <meta charset="utf-8">
-    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='style.css') }}">
-    <title>PhilAD</title>
-  </head>
-  <body>
-    <div class="container">
-    <div class="header">
-      <h2 class="title">PhilAD</h2>
-    </div>
+	<meta charset="utf-8">
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 
-  	<div class="form">
-      <form id="form">
-        {{form.hidden_tag()}}
-        <div>
-          {{form.address.label()}}
-          {{form.address()}}
-        </div>
-        <div class="submit-div">
-          <button id = "submit">Submit</button>
-        </div>
-      </form>
-    </div>
-    <div class="result">
-        <label for = "barangay">Barangay</label>
-        <textarea id = "barangay" class = "textarea" value = "barangay" ></textarea>
-        <label for = "city" class = "textarea">City</label>
-        <textarea id = "city" class = "textarea" value = "city"></textarea>
-        <label for = "province" class = "textarea">Province</label>
-        <textarea id = "province" class = "textarea" value = province></textarea>
-        <label for = "region">Region</label>
-        <textarea id = "region" class="textarea" value = "region"></textarea>
-    </div>
+	<title>PhilAD</title>
+
+  	<!-- Custom fonts for this template -->
+  	<link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+ 	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+ 	<link href='https://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
+ 	<link href='https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+	<link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css'>
+
+	<!-- Custom bootstrap for this template -->
+	<link href="static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+	<!-- Custom styles for this template -->
+	<link href="static/css/agency.min.css" rel="stylesheet" type="text/css">
+	<link href="static/css/styles.css" rel="stylesheet" type="text/css">
+	<link href="static/css/agency.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body>
+  <div class="header text-center">
+    <a class="title">PhilAD</a>
   </div>
+
+  <!-- Division separator -->
+
+  <div class="separator"></div>
+
+	<div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <form id="form">
+            {{form.hidden_tag()}}
+          <div class="row">
+
+          <div class="col-md-3">
+            {{form.address.label()}}
+          </div>
+          <div class="col-md-9">
+            {{form.address()}}
+          </div>
+
+            <!-- Enter address fields -->
+
+            <!--
+            <div class="col-md-3">
+              <div class="form-group">
+                <label>Please enter complete address.</label>
+                <p class="help-block text-danger"></p>
+              </div>
+            </div>
+
+            <div class="col-md-9">
+              <div class="form-group">
+                <input class="form-control" type="" name="" placeholder="...">
+                <p class="help-block text-danger"></p>
+              </div>
+            </div>
+            -->
+
+
+            <!-- Division separator -->
+
+            <div class="separator col-md-12"></div>
+
+            <!-- Submit button -->
+
+            <div class="col-lg-12 text-center">
+              <div class="submit-div">
+                <button id = "submit" class="btn btn-secondary btn-x2 text-uppercase">Parse Address</button>
+              </div>
+            </div>
+
+            <!-- Division separator -->
+
+            <div class="separator col-md-12"></div>
+
+            <!-- Address components text area Barangay -->
+
+            <div class="col-md-1">
+              <div class="form-group">
+                <label for="barangay">Barangay</label>
+              </div>
+            </div>
+
+            <div class="col-md-2">
+              <div class="form-group">
+                <textarea class="form-control" id="barangay" value="barangay" style="text-transform: uppercase;"></textarea>
+              </div>
+            </div>
+
+            <!-- Address components text area City -->
+
+            <div class="col-md-1">
+              <div class="form-group">
+                <label for="city">City</label>
+              </div>
+            </div>
+
+            <div class="col-md-2">
+              <div class="form-group">
+                <textarea class="form-control" id="city" value="city" style="text-transform: uppercase;"></textarea>
+              </div>
+            </div>
+
+            <!-- Address components text area Province -->
+
+            <div class="col-md-1">
+              <div class="form-group">
+                <label for="province">Province</label>
+              </div>
+            </div>
+
+            <div class="col-md-2">
+              <div class="form-group">
+                <textarea class="form-control" id="province" value="province" style="text-transform: uppercase;"></textarea>
+              </div>
+            </div>
+
+            <!-- Address components text area Region -->
+
+            <div class="col-md-1">
+              <div class="form-group">
+                <label for="region">Region</label>
+              </div>
+            </div>
+
+            <div class="col-md-2">
+              <div class="form-group">
+                <textarea class="form-control" id="Region" value="region" style="text-transform: uppercase;"></textarea>
+              </div>
+            </div>
+
+            <!-- Division separator -->
+
+            <div class="separator col-md-12"></div>
+
+            <!-- Submit button -->
+
+            <div class="col-lg-12 text-center">
+              <div class="submit-div">
+                <button id = "" class="btn btn-secondary btn-x2 text-uppercase" id = "save_excel">Submit</button>
+              </div>
+            </div>
+
+            <!-- Division separator -->
+
+            <div class="separator col-md-12"></div>
+
+            <!-- Dropdown list Barangay -->
+
+            <div class="col-md-3" >
+              <div class="form-group">
+                <select  class="form-control" id = "barangay_dropdown" style="text-transform: uppercase;" >
+                  <option value="">...</option>
+                  <option value="">...</option>
+                  <option value="">...</option>
+                  <option value="">...</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Dropdown list City -->
+
+            <div class="col-md-3" >
+              <div class="form-group">
+                <select  class="form-control" id = "city_dropdown" style="text-transform: uppercase;">
+                  <option value="">...</option>
+                  <option value="">...</option>
+                  <option value="">...</option>
+                  <option value="">...</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Dropdown list Province -->
+
+            <div class="col-md-3" >
+              <div class="form-group">
+                <select  class="form-control" id = "province_dropdown" style="text-transform: uppercase;">
+                  <option value="">...</option>
+                  <option value="">...</option>
+                  <option value="">...</option>
+                  <option value="">...</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Dropdown list Region -->
+
+            <div class="col-md-3" >
+              <div class="form-group">
+                <select  class="form-control" id = "region_dropdown" style="text-transform: uppercase;">
+                  <option value="">...</option>
+                  <option value="">...</option>
+                  <option value="">...</option>
+                  <option value="">...</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Division separator -->
+
+            <div class="separator col-md-12"></div>
+
+            <!-- Submit button -->
+
+            <div class="col-lg-12 text-center">
+              <div class="submit-div" id = "replace_tags">
+                <button id = "" class="btn btn-secondary btn-x2 text-uppercase">Replace</button>
+              </div>
+            </div>
+
+          </div>
+        </form>
+      </div>
+    </div>
+#for excel
+		<form onsubmit="return exportF()">
+		  <input id="text" type="text" />
+		  <input type="submit" />
+		</form>
+
+		<table id="table" style="display: none">
+		  <tr>
+		    <td id="input">
+		    </td>
+		  </tr>
+		</table>
+
+
+		<a style="display: none" id="downloadLink"></a>
+
 
 </body>
 </html>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+
 <script type="text/javascript">
+
     window.onload = function() {
+
         // setup the button click
-        document.getElementById("submit").onclick = function() {
+
+        document.getElementById("submit").onclick = function();  {
+
             // ajax the JSON to the server
+
             $.ajax({
+
                 url: '/predict',
+
                 data: $('#form').serialize(),
+
                 type: 'POST',
+
                 success: function(response) {
                     const entries = Object.entries(response.prediction);
                     $('#barangay').val('');
@@ -75,6 +287,43 @@
                                 break;
                         }
                     }
+										$.ajax({
+											url: '/dropdown',
+
+			                data: {{data_lookup}}
+
+			                type: 'POST'
+
+										 const entries = Object.entries(response.data_lookup)
+										 $('barangay_dropdown').val('')
+										 $('city_dropdown').val('')
+										 $('province_dropdown').val('')
+										 $('region_dropdown').val('')
+										 $('#barangay').val('');
+                     $('#city').val('');
+                     $('#province').val('');
+                     $('#region').val('');
+										 for(const [key, value] of entries){
+												switch (key) {
+													case $('#barangay').val(value) == true:
+														bar = [k for k in data_lookup if '#barangay'.val(value) in k]
+														break;
+													case $('#city').val(value) == true:
+														filter(lambda k: '#city.val(value)' in k, data_lookup)
+														break;
+													case $('#province').val(value) == true:
+														filter(lambda k: '#province.val(value)' in k, data_lookup)
+														break;
+													case $('#region').val(value) == true:
+														filter(lambda k: '#region.val(value)' in k, data_lookup)
+														break;
+													default:
+													}
+												}
+										 	}
+										 }
+									  });
+
 
                     // try:
                     //   if (output.items = output['barangay']){
@@ -93,12 +342,38 @@
                     //     console.error('no data found');
                     //   }
                 },
+
                 error: function(error) {
+
                     console.log(error);
+
                 }
+
             });
+						document.getElementById("save_excel").onclick = function() {
+							function exportF() {
+								  //Format your table with form data
+								  document.getElementById("textarea").innerHTML = document.getElementById("barangay").value;document.getElementById("city");
+																																		document.getElementById("province");document.getElementById("region")
+
+								  var table = document.getElementById("table");
+								  var html = table.outerHTML;
+
+								  var url = 'data:application/vnd.ms-excel,' + escape(html); // Set your html table into url
+								  var link = document.getElementById("downloadLink");
+								  link.setAttribute("href", url);
+								  link.setAttribute("download", "export.xls"); // Choose the file name
+								  link.click(); // Download your excel file
+								  return false;
+								}
+						}
+
             // stop link reloading the page
+
          event.preventDefault();
+
         }
+
     };
+
 </script>
