@@ -52,23 +52,42 @@
                 data: $('#form').serialize(),
                 type: 'POST',
                 success: function(response) {
-                    console.log(response);
-                    try:
-                      if (output.items = output['barangay']){
-                        $('#barangay') = output['barangay']
-                      }
-                      if (output.items = output['city']){
-                        $('#city') = output['city']
-                      }
-                      if (output.items = output['province']){
-                        output['province'] = ('#province')
-                      }
-                      if (output.items = output['region']){
-                        output['region'] = ('#region')
-                      }
-                      else {
-                        console.error('no data found');
-                      }
+                    const entries = Object.entries(response.prediction);
+                    for(const [key, value] of entries){
+                        switch(key){
+                            case 'barangay':
+                                $('#barangay').val(value);
+                                break;
+                            case 'city':
+                                $('#city').val(value);
+                                break;
+                            case 'province':
+                                $('#province').val(value);
+                                break;
+                            case 'region':
+                                $('#region').val(value);
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+
+                    // try:
+                    //   if (output.items = output['barangay']){
+                    //     $('#barangay') = output['barangay']
+                    //   }
+                    //   if (output.items = output['city']){
+                    //     $('#city') = output['city']
+                    //   }
+                    //   if (output.items = output['province']){
+                    //     output['province'] = ('#province')
+                    //   }
+                    //   if (output.items = output['region']){
+                    //     output['region'] = ('#region')
+                    //   }
+                    //   else {
+                    //     console.error('no data found');
+                    //   }
                 },
                 error: function(error) {
                     console.log(error);

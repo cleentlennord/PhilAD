@@ -23,19 +23,14 @@ def predict():
     if ct_reloaded:
         try:
             data = request.form
-            norm_input = data['address'].split(',')
+            norm_input = list(map(str.strip, data['address'].split(',')))
             prediction = ct_reloaded.tag(norm_input)
-            return jsonify({'prediction': str(prediction) })
+            return jsonify({'prediction': {tag: token for (token, tag) in prediction}})
         except:
             return jsonify({'trace': traceback.format_exc()})
     else:
         print ('Train the model first')
         return 500, 'Model Not Found'
-
-    output = json.dumps(prediction)
-    output = dict(itertools.zip_longest(*[iter(prediction)] * 2, fillvalue=""))
-    return output
-
 
 ##start website##
 @app.route("/", methods = ['GET', 'POST'])
