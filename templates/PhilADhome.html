@@ -53,6 +53,10 @@
                 type: 'POST',
                 success: function(response) {
                     const entries = Object.entries(response.prediction);
+                    $('#barangay').val('');
+                    $('#city').val('');
+                    $('#province').val('');
+                    $('#region').val('');
                     for(const [key, value] of entries){
                         switch(key){
                             case 'barangay':
