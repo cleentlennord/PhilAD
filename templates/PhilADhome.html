@@ -290,37 +290,34 @@
 										$.ajax({
 											url: '/dropdown',
 
-			                data: {{data_lookup}}
+			                data: data_lookup[].val(value),
 
-			                type: 'POST'
-
+			                type: 'POST',
+											success: function(response) {
 										 const entries = Object.entries(response.data_lookup)
-										 $('barangay_dropdown').val('')
-										 $('city_dropdown').val('')
-										 $('province_dropdown').val('')
-										 $('region_dropdown').val('')
-										 $('#barangay').val('');
-                     $('#city').val('');
-                     $('#province').val('');
-                     $('#region').val('');
+										 $('#barangay_dropdown').val('')
+										 $('#city_dropdown').val('')
+										 $('#province_dropdown').val('')
+										 $('#region_dropdown').val('')
 										 for(const [key, value] of entries){
 												switch (key) {
 													case $('#barangay').val(value) == true:
 														bar = [k for k in data_lookup if '#barangay'.val(value) in k]
 														break;
 													case $('#city').val(value) == true:
-														filter(lambda k: '#city.val(value)' in k, data_lookup)
+														bar = [k for k in data_lookup if '#city'.val(value) in k]
 														break;
 													case $('#province').val(value) == true:
-														filter(lambda k: '#province.val(value)' in k, data_lookup)
+														bar = [k for k in data_lookup if '#province'.val(value) in k]
 														break;
 													case $('#region').val(value) == true:
-														filter(lambda k: '#region.val(value)' in k, data_lookup)
+														
 														break;
 													default:
 													}
 												}
 										 	}
+										}
 										 }
 									  });
 

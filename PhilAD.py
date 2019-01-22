@@ -32,7 +32,10 @@ def dropdown():
         for (j, column) in row.iteritems():
             item.append((str(column), j))
         data_lookup.append(item)
+
     return jsonify({{data_lookup}})
+
+
 #tagger
 @app.route('/predict', methods=['POST'])
 def predict():
