@@ -1,0 +1,42 @@
+
+.header{
+  height: 200px;
+  width: auto;
+  background-color: skyblue;
+  margin-bottom: 10px;
+  border-style: ridge;
+}
+.title{
+  font: 48px Arial, bold;
+  display: inline-grid;
+  margin-left: 600px;
+}
+.form{
+  height:300px;
+}
+.submit-div{
+  margin-top: 20px;
+  margin-left: 250px;
+}
+.result{
+  margin-left: 200px;
+}
+.textarea{
+  border-radius: 10px;
+}
+#address{
+  border-radius: 10px;
+  margin-top: 10px;
+  height: 300px;
+  width: 400px;
+}
+#submit{
+  padding-top: 10px;
+  border-radius: 10px;
+  background-color: #008CBA;
+  font: 18px Arial, bold, italic;
+}
+
+label{
+  font: 12px Helvetica;
+}

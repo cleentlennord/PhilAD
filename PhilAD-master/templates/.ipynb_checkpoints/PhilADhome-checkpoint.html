@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='style.css') }}">
+    <title>PhilAD</title>
+  </head>
+  <body>
+    <div class="container">
+    <div class="header">
+      <h2 class="title">PhilAD</h2>
+    </div>
+
+  	<div class="form">
+      <form id="form">
+        {{form.hidden_tag()}}
+        <div>
+          {{form.address.label()}}
+          {{form.address()}}
+        </div>
+        <div class="submit-div">
+          <button id = "submit">Submit</button>
+        </div>
+      </form>
+    </div>
+    <div class="result">
+        <label for = "barangay">Barangay</label>
+        <textarea id = "barangay" class = "textarea" value = "prediction" ></textarea>
+        <label for = "city" class = "textarea">City</label>
+        {{prediction}}
+        <textarea id = "city" class = "textarea"></textarea>
+        <label for = "province" class = "textarea">Province</label>
+        <textarea id = "province" class = "textarea"></textarea>
+        <label for = "region">Region</label>
+        <textarea id = "region" class="textarea"></textarea>
+    </div>
+  </div>
+
+</body>
+</html>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script type="text/javascript">
+    window.onload = function() {
+        // setup the button click
+        document.getElementById("submit").onclick = function() {
+            // ajax the JSON to the server
+            $.ajax({
+                url: '/predict',
+                data: $('#form').serialize(),
+                type: 'POST',
+                success: function(response) {
+                    console.log(response);
+                },
+                error: function(error) {
+                    console.log(error);
+                }
+            });
+            // stop link reloading the page
+         event.preventDefault();
+        }
+    };
+</script>

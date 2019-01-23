@@ -1,0 +1,28 @@
+body{
+	background-color: #FBEFF2;
+}
+
+.header{
+
+ 	height: 200px;
+ 	width: auto;
+	background-color: #2E9AFE;
+	margin-bottom: 10px;
+	border-style: solid; 
+ 	display: block;
+}
+.header-text-color{
+	color:#fed136;
+}
+.separator{
+	height: 40px;
+	width: auto;
+
+}
+.title{
+	font-family:Kaushan Script;
+	font-size: 120px;
+	text-align: center;
+
+
+}
