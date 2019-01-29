@@ -11,7 +11,7 @@ import traceback
 app = Flask(__name__)
 
 ct_reloaded = CRFTagger()
-ct_reloaded.set_model_file('data_test.model')
+ct_reloaded.set_model_file('ncr_test.model')
 
 app.config['SECRET_KEY'] = '601bbfb9d4c8e0a4a0a66d8f9b2f79cd'
 

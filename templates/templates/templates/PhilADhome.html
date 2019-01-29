@@ -64,7 +64,7 @@
 
             <!-- Side spacer for text area label row -->
             <div class="col-sm-1">
-              <div class="form-group"></div>             
+              <div class="form-group"></div>
             </div>
 
             <!-- Address components text area label Barangay -->
@@ -104,12 +104,12 @@
 
             <!-- Side spacer for text area label row -->
             <div class="col-sm-1">
-              <div class="form-group"></div>             
+              <div class="form-group"></div>
             </div>
 
             <!-- Side spacer for text area row -->
             <div class="col-sm-1">
-              <div class="form-group"></div>             
+              <div class="form-group"></div>
             </div>
 
             <!-- Address components text area Barangay -->
@@ -143,13 +143,13 @@
              <!-- Address components text area Postal Code -->
             <div class="col-md-2">
               <div class="form-group">
-                <textarea class="form-control" id="" value="region" style="text-transform: uppercase;"></textarea>
+                <textarea class="form-control" id="postal" value="postal" style="text-transform: uppercase;"></textarea>
               </div>
             </div>
 
             <!-- Side spacer for dropdown textarea row -->
             <div class="col-sm-1">
-              <div class="form-group"></div>             
+              <div class="form-group"></div>
             </div>
 
             <!-- Division separator -->
@@ -167,13 +167,13 @@
 
             <!-- Side spacer for dropdown row -->
             <div class="col-sm-1">
-              <div class="form-group"></div>             
+              <div class="form-group"></div>
             </div>
 
             <!-- Dropdown list Barangay -->
             <div class="col-md-2" >
               <div class="form-group">
-                <select  class="form-control" style="text-transform: uppercase;">
+                <select id="barangay_dropdown" class="form-control" style="text-transform: uppercase;">
                   <option value="">...</option>
                 </select>
               </div>
@@ -182,7 +182,7 @@
             <!-- Dropdown list City -->
             <div class="col-md-2" >
               <div class="form-group">
-                <select  class="form-control" style="text-transform: uppercase;">
+                <select id="city_dropdown" class="form-control" style="text-transform: uppercase;">
                   <option value="">...</option>
                 </select>
               </div>
@@ -191,7 +191,7 @@
             <!-- Dropdown list Province -->
             <div class="col-md-2" >
               <div class="form-group">
-                <select  class="form-control" style="text-transform: uppercase;">
+                <select id="province_dropdown" class="form-control" style="text-transform: uppercase;">
                   <option value="">...</option>
                 </select>
               </div>
@@ -200,7 +200,7 @@
             <!-- Dropdown list Region -->
             <div class="col-md-2" >
               <div class="form-group">
-                <select  class="form-control" style="text-transform: uppercase;">
+                <select "region_dropdown" class="form-control" style="text-transform: uppercase;">
                   <option value="">...</option>
                 </select>
               </div>
@@ -209,7 +209,7 @@
             <!-- Dropdown list Postal Code -->
             <div class="col-md-2" >
               <div class="form-group">
-                <select  class="form-control" style="text-transform: uppercase;">
+                <select id="postal_dropdown" class="form-control" style="text-transform: uppercase;">
                   <option value="">...</option>
                 </select>
               </div>
@@ -217,7 +217,7 @@
 
             <!-- Side spacer for dropdown row -->
             <div class="col-sm-1">
-              <div class="form-group"></div>             
+              <div class="form-group"></div>
             </div>
 
             <!-- Division separator -->
@@ -230,7 +230,7 @@
               </div>
             </div>
 
-   
+
   </div>
 
 </body>
@@ -252,6 +252,7 @@
                     $('#city').val('');
                     $('#province').val('');
                     $('#region').val('');
+                    $('#postal').val('');
                     for(const [key, value] of entries){
                         switch(key){
                             case 'barangay':
@@ -266,27 +267,13 @@
                             case 'region':
                                 $('#region').val(value);
                                 break;
+                            case 'postal':
+                                $('#postal').val(value);
                             default:
                                 break;
                         }
-                    }
 
-                    // try:
-                    //   if (output.items = output['barangay']){
-                    //     $('#barangay') = output['barangay']
-                    //   }
-                    //   if (output.items = output['city']){
-                    //     $('#city') = output['city']
-                    //   }
-                    //   if (output.items = output['province']){
-                    //     output['province'] = ('#province')
-                    //   }
-                    //   if (output.items = output['region']){
-                    //     output['region'] = ('#region')
-                    //   }
-                    //   else {
-                    //     console.error('no data found');
-                    //   }
+                    }
                 },
                 error: function(error) {
                     console.log(error);
@@ -295,5 +282,48 @@
             // stop link reloading the page
          event.preventDefault();
         }
+        //dropdown js
+        $('#barangay', '#city', '#province', '#region', '#postal').change (function() {
+              $.ajax({
+                url: '/dropdown',
+                type: 'GET',
+                success: function(response){
+                  const entries = Object.entries(response)
+                  for(const [key, value] of entries){
+                    switch (key) {
+                      case $('#barangay').value:
+                        $.each(response, function (i, item) {
+                          $("#barangay_dropdown").append("<option value='"+item.barangay+"</option>");
+                        )};
+                        break;
+                      case $('#city').value:
+                        $.each(response, function (i, item) {
+                          $("#city_dropdown").append("<option value='"+item.city+"</option>");
+                        )};
+                        break;
+                      case $('#province').value:
+                        $.each(response, function (i, item) {
+                          $("#province_dropdown").append("<option value='"+item.province+"</option>");
+                        )};
+                        break;
+                      case $('#region').value:
+                        $.each(response, function (i, item) {
+                          $("#region_dropdown").append("<option value='"+item.region+"</option>");
+                        )};
+                        break;
+                      case $('#postal').value:
+                        $.each(response, function (i, item) {
+                          $("#postal_dropdown").append("<option value='"+item.postal+"</option>");
+                        )};
+                        break;
+                      default:
+                        break;
+                        }
+                      }
+                  }
+                }
+              });
+            }
     };
+
 </script>
