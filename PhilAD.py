@@ -26,7 +26,7 @@ def dropdown():
     if column not in list(LOOKUP.columns):
         return 'Invalid Column', 400
 
-    return LOOKUP[LOOKUP[column].str.contains(input)].to_json(orient='records')
+    return LOOKUP[LOOKUP[column].str.contains(input, case=False)].to_json(orient='records')
 
 ##forms##
 class Address(FlaskForm):
