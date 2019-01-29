@@ -4,6 +4,7 @@ from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired, Length
 from nltk.tag import CRFTagger
 
+import pandas as pd
 import pycrfsuite
 import traceback
 
@@ -14,23 +15,19 @@ ct_reloaded.set_model_file('data_test.model')
 
 app.config['SECRET_KEY'] = '601bbfb9d4c8e0a4a0a66d8f9b2f79cd'
 
-#dropdown#
-@app.route('/dropdown', methods=['POST'])
+# SET UP DROPDOWN
+LOOKUP = pd.read_excel('data_lookup.xlsx')
+
+@app.route('/dropdown', methods=['GET'])
 def dropdown():
-    data = pd.read_excel('data_lookup.xlsx')
-    data.columns
-    data = data[['barangay', 'city']]
-    lookup = []
+    column = request.args.get('column')
+    input = request.args.get('input')
 
-        for (i, row) in data.iterrows():
-            item = []
+    if column not in list(LOOKUP.columns):
+        return 'Invalid Column', 400
 
-            for (j, column) in row.iteritems():
-                item.append((str(column), j))
+    return LOOKUP[LOOKUP[column].str.contains(input)].to_json(orient='records')
 
-            lookup.append(item)
-
-    return lookup;
 ##forms##
 class Address(FlaskForm):
     address = StringField('Input Address')
@@ -47,7 +44,7 @@ def predict():
             return jsonify({'trace': traceback.format_exc()})
     else:
         print ('Train the model first')
-        return 500, 'Model Not Found'
+        return 'Model Not Found', 500
 
 ##start website##
 @app.route("/", methods = ['GET', 'POST'])
