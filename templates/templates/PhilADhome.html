@@ -64,7 +64,7 @@
 
             <!-- Side spacer for text area label row -->
             <div class="col-sm-1">
-              <div class="form-group"></div>             
+              <div class="form-group"></div>
             </div>
 
             <!-- Address components text area label Barangay -->
@@ -98,18 +98,18 @@
             <!-- Address components text area label Postal Code -->
             <div class="col-md-2">
               <div class="form-group">
-                <label for="">Postal Code</label>
+                <label for="postal">Postal Code</label>
               </div>
             </div>
 
             <!-- Side spacer for text area label row -->
             <div class="col-sm-1">
-              <div class="form-group"></div>             
+              <div class="form-group"></div>
             </div>
 
             <!-- Side spacer for text area row -->
             <div class="col-sm-1">
-              <div class="form-group"></div>             
+              <div class="form-group"></div>
             </div>
 
             <!-- Address components text area Barangay -->
@@ -149,7 +149,7 @@
 
             <!-- Side spacer for dropdown textarea row -->
             <div class="col-sm-1">
-              <div class="form-group"></div>             
+              <div class="form-group"></div>
             </div>
 
             <!-- Division separator -->
@@ -167,13 +167,13 @@
 
             <!-- Side spacer for dropdown row -->
             <div class="col-sm-1">
-              <div class="form-group"></div>             
+              <div class="form-group"></div>
             </div>
 
             <!-- Dropdown list Barangay -->
             <div class="col-md-2" >
               <div class="form-group">
-                <select  class="form-control" style="text-transform: uppercase;">
+                <select id="barangay-dropdown"  class="form-control" style="text-transform: uppercase;">
                   <option value="">...</option>
                 </select>
               </div>
@@ -182,7 +182,7 @@
             <!-- Dropdown list City -->
             <div class="col-md-2" >
               <div class="form-group">
-                <select  class="form-control" style="text-transform: uppercase;">
+                <select id="city_dropdown" class="form-control" style="text-transform: uppercase;">
                   <option value="">...</option>
                 </select>
               </div>
@@ -191,7 +191,7 @@
             <!-- Dropdown list Province -->
             <div class="col-md-2" >
               <div class="form-group">
-                <select  class="form-control" style="text-transform: uppercase;">
+                <select  id="province_dropdown" class="form-control" style="text-transform: uppercase;">
                   <option value="">...</option>
                 </select>
               </div>
@@ -200,7 +200,7 @@
             <!-- Dropdown list Region -->
             <div class="col-md-2" >
               <div class="form-group">
-                <select  class="form-control" style="text-transform: uppercase;">
+                <select id="region_dropdown"  class="form-control" style="text-transform: uppercase;">
                   <option value="">...</option>
                 </select>
               </div>
@@ -209,7 +209,7 @@
             <!-- Dropdown list Postal Code -->
             <div class="col-md-2" >
               <div class="form-group">
-                <select  class="form-control" style="text-transform: uppercase;">
+                <select id="postal_dropdown" class="form-control" style="text-transform: uppercase;">
                   <option value="">...</option>
                 </select>
               </div>
@@ -217,7 +217,7 @@
 
             <!-- Side spacer for dropdown row -->
             <div class="col-sm-1">
-              <div class="form-group"></div>             
+              <div class="form-group"></div>
             </div>
 
             <!-- Division separator -->
@@ -230,7 +230,7 @@
               </div>
             </div>
 
-   
+
   </div>
 
 </body>
@@ -252,7 +252,8 @@
                     $('#city').val('');
                     $('#province').val('');
                     $('#region').val('');
-                    for(const [key, value] of entries){
+                    $('#postal').val('');
+                    for(const [key, value] of entries){)
                         switch(key){
                             case 'barangay':
                                 $('#barangay').val(value);
@@ -266,27 +267,14 @@
                             case 'region':
                                 $('#region').val(value);
                                 break;
+                            case 'postal':
+                                $('postal').val(value);
                             default:
                                 break;
                         }
+                      //addntl functions
+                      Dropdown();
                     }
-
-                    // try:
-                    //   if (output.items = output['barangay']){
-                    //     $('#barangay') = output['barangay']
-                    //   }
-                    //   if (output.items = output['city']){
-                    //     $('#city') = output['city']
-                    //   }
-                    //   if (output.items = output['province']){
-                    //     output['province'] = ('#province')
-                    //   }
-                    //   if (output.items = output['region']){
-                    //     output['region'] = ('#region')
-                    //   }
-                    //   else {
-                    //     console.error('no data found');
-                    //   }
                 },
                 error: function(error) {
                     console.log(error);
@@ -294,6 +282,29 @@
             });
             // stop link reloading the page
          event.preventDefault();
+        }
+        function Dropdown(data){
+          //get data
+          for(const [key, value] of entries) //loop ng data with key para malaman yung katabi
+            switch (key) {
+              case ()'barangay'.value == True):
+              data.values+="<option value='"
+              +'city'.data+
+              "</option>";
+               });
+               if($(this).val()=="IN"){
+                 $.getJSON('indianStates.json',function(result){
+                 $.each(result, function(stateCode,stateName) {
+                  //<option value='stateCode'>stateName</option>
+                  stateOptions+="<option value='"
+                  +stateCode+
+                  "'>"
+                  +stateName+
+                  $('#city_dropdown').val(value);
+                break;
+              default:
+
+            }
         }
     };
 </script>

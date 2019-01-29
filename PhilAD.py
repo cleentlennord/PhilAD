@@ -3,7 +3,6 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired, Length
 from nltk.tag import CRFTagger
-import pandas as pd
 
 import pycrfsuite
 import traceback
@@ -15,28 +14,27 @@ ct_reloaded.set_model_file('data_test.model')
 
 app.config['SECRET_KEY'] = '601bbfb9d4c8e0a4a0a66d8f9b2f79cd'
 
+#dropdown#
+@app.route('/dropdown', methods=['POST'])
+def dropdown():
+    data = pd.read_excel('data_lookup.xlsx')
+    data.columns
+    data = data[['barangay', 'city']]
+    lookup = []
+
+        for (i, row) in data.iterrows():
+            item = []
+
+            for (j, column) in row.iteritems():
+                item.append((str(column), j))
+
+            lookup.append(item)
+
+    return lookup;
 ##forms##
 class Address(FlaskForm):
     address = StringField('Input Address')
 
-@app.route('/predict', methods=['POST'])
-def dropdown():
-    data = pd.read_excel('data_lookup.xlsx')
-    data.columns
-    data = data[['barangay', 'city', 'province', 'region'].dropna()]
-    data_lookup = []
-
-    for (i, row) in data.iterrows():
-        item = []
-
-        for (j, column) in row.iteritems():
-            item.append((str(column), j))
-        data_lookup.append(item)
-
-    return jsonify({{data_lookup}})
-
-
-#tagger
 @app.route('/predict', methods=['POST'])
 def predict():
     if ct_reloaded:
