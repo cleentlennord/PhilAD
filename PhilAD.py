@@ -4,6 +4,7 @@ from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired, Length
 from nltk.tag import CRFTagger
 
+import json
 import pandas as pd
 import pycrfsuite
 import traceback
@@ -21,12 +22,19 @@ LOOKUP = pd.read_excel('ncr_lookup.xlsx')
 @app.route('/dropdown', methods=['GET'])
 def dropdown():
     column = request.args.get('column')
-    input = request.args.get('input')
 
     if column not in list(LOOKUP.columns):
         return 'Invalid Column', 400
 
-    return LOOKUP[LOOKUP[column].str.contains(input, case=False)].to_json(orient='records')
+    if 'input' in request.args:
+
+        input = request.args.get('input')
+        data = json.loads(LOOKUP[LOOKUP[column].str.contains(input, case=False)].to_json(orient='records'))
+
+    else:
+        data = json.loads(LOOKUP[column].to_json(orient='records'))
+
+    return jsonify(data)
 
 ##forms##
 class Address(FlaskForm):
@@ -37,7 +45,7 @@ def predict():
     if ct_reloaded:
         try:
             data = request.form
-            norm_input = list(map(str.strip, data['address'].split(',')))
+            norm_input = list(map(str.strip, data['address'].upper().split(',')))
             prediction = ct_reloaded.tag(norm_input)
             return jsonify({'prediction': {tag: token for (token, tag) in prediction}})
         except:

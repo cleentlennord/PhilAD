@@ -136,14 +136,14 @@
             <!-- Address components text area Region -->
             <div class="col-md-2">
               <div class="form-group">
-                <textarea class="form-control" id="Region" value="region" style="text-transform: uppercase;"></textarea>
+                <textarea class="form-control" id="region" value="region" style="text-transform: uppercase;"></textarea>
               </div>
             </div>
 
              <!-- Address components text area Postal Code -->
             <div class="col-md-2">
               <div class="form-group">
-                <textarea class="form-control" id="" value="region" style="text-transform: uppercase;"></textarea>
+                <textarea class="form-control" id="postal" value="region" style="text-transform: uppercase;"></textarea>
               </div>
             </div>
 
@@ -252,19 +252,28 @@
                     $('#city').val('');
                     $('#province').val('');
                     $('#region').val('');
-                    for(const [key, value] of entries){
+                    $('#postal').val('');
+                    console.log(response);
+                    for(const [key, value] of entries) {
                         switch(key){
                             case 'barangay':
                                 $('#barangay').val(value);
+                                get_city(value);
                                 break;
                             case 'city':
                                 $('#city').val(value);
+                                get_province(value);
                                 break;
                             case 'province':
                                 $('#province').val(value);
+                                get_region(value);
                                 break;
                             case 'region':
                                 $('#region').val(value);
+                                region();
+                                break;
+                            case 'postal':
+                                $('#postal').val(value);
                                 break;
                             default:
                                 break;
@@ -282,50 +291,136 @@
         // Setup mo dito lahat ng onChange listeners
         // Barangay field to right? then matic dapat na column nya is barangay
         // note na barangay level palang to, bahala ka na kung gagawa ka ng next levels
-        $('#barangay').on('keyup', function(){
-
-            // Get barangay field value
-            var barangay = $('#barangay').val();
-
-            $.ajax({
-                url: '/dropdown?column=barangay&input=' + barangay,
-                type: 'GET',
-                success: function(response){
-
-                    // parse mo muna si response para maging JSON
-                    response = JSON.parse(response);
-
-                    // lahat ng content ng response iloop mo
-                    response.forEach(function(item, index){
-
-                        // Gawa ka option for each DROPDOWN syempre mula barangay and so on
-                        // kapag city level mula naman city and so on
-                        var newOption = new Option(item.barangay, index, false, false);
-                        $('#barangay_dropdown').append(newOption).trigger('change');
-
-                        var newOption = new Option(item.city, index, false, false);
-                        $('#city_dropdown').append(newOption).trigger('change');
-
-                        var newOption = new Option(item.province, index, false, false);
-                        $('#province_dropdown').append(newOption).trigger('change');
-
-                        var newOption = new Option(item.region, index, false, false);
-                        $('#region_dropdown').append(newOption).trigger('change');
-
-                        var newOption = new Option(item.postal, index, false, false);
-                        $('#postal_dropdown').append(newOption).trigger('change');
-                    });
-                    // response, function(i, item){
-                    //     console.log(item);
-                    //     // $('#barangay_dropdown').append("<option value'")+response[i].column+("'</option>");
-                    // });
-
-                },
-                error: function(error) {
-                    console.log(error);
-                }
-            });
-        });
+        // $('#barangay').on('keyup change', function(){
+        //
+        //     // Get barangay field value
+        //     var barangay = $('#barangay').val();
+        //
+        //     $.ajax({
+        //         url: '/dropdown?column=barangay&input=' + barangay,
+        //         type: 'GET',
+        //         success: function(response){
+        //
+        //             // parse mo muna si response para maging JSON
+        //             response = JSON.parse(response);
+        //
+        //             // lahat ng content ng response iloop mo
+        //             response.forEach(function(item, index){
+        //
+        //                 // Gawa ka option for each DROPDOWN syempre mula barangay and so on
+        //                 // kapag city level mula naman city and so on
+        //                 var newOption = new Option(item.barangay, index, false, false);
+        //                 $('#barangay_dropdown').append(newOption).trigger('change');
+        //
+        //                 var newOption = new Option(item.city, index, false, false);
+        //                 $('#city_dropdown').append(newOption).trigger('change');
+        //
+        //                 var newOption = new Option(item.province, index, false, false);
+        //                 $('#province_dropdown').append(newOption).trigger('change');
+        //
+        //                 var newOption = new Option(item.region, index, false, false);
+        //                 $('#region_dropdown').append(newOption).trigger('change');
+        //
+        //                 var newOption = new Option(item.postal, index, false, false);
+        //                 $('#postal_dropdown').append(newOption).trigger('change');
+        //             });
+        //             // response, function(i, item){
+        //             //     console.log(item);
+        //             //     // $('#barangay_dropdown').append("<option value'")+response[i].column+("'</option>");
+        //             // });
+        //
+        //         },
+        //         error: function(error) {
+        //             console.log(error);
+        //         }
+        //     });
+        // });
 
     };
+
+    function get_city(barangay) {
+        alert("called");
+        var dropdown_el = $("#city_dropdown");
+        dropdown_el.html(''); // Clear Contents of drop element
+        $.ajax({
+            url: '/dropdown?column=barangay&input=' + barangay,
+            type: 'GET',
+            success: function(response) {
+                cities = []
+
+                // Get Cities
+                for(var i = 0; i < response.length; i++) {
+                    cities.push(response[i]['city'])
+                }
+
+                // Get unique values
+                cities = [...new Set(cities)]
+
+                // Set the Unique values to the UI
+                for(var i = 0; i < cities.length; i++) {
+                    $("<option />")
+                    .attr("value", cities[i])
+                    .html(cities[i])
+                    .appendTo(dropdown_el);
+                }
+            }
+        });
+    }
+
+    function get_province(city) {
+        var dropdown_el = $('#province_dropdown');
+        dropdown_el.html('');
+        $.ajax({
+            url: '/dropdown?column=city&input=' + city,
+            type: 'GET',
+            success: function(response){
+                provinces = [];
+                for(var i = 0; i < response.length; i++){
+                    provinces.push(response[i]['province'])
+                }
+                provinces = [...new Set(provinces)]
+                for(var i = 0; i < provinces.length; i++) {
+                    $("<option />")
+                    .attr("value", provinces[i])
+                    .html(provinces[i])
+                    .appendTo(dropdown_el);
+                }
+            }
+        });
+    }
+    function get_region(province){
+        var dropdown_el = $('#region_dropdown');
+        dropdown_el.html('');
+        $.ajax({
+            url: '/dropdown?column=province&input=' + province,
+            type: 'GET',
+            success: function(response){
+                region = [];
+                for(var i = 0; i < response.lenght; i++){
+                    region.push(response[i]['region'])
+                }
+                region = [...new Set(region)]
+                for(var i = 0; i < region.length; i++){
+                    $("<option />")
+                    .attr("value", region[i])
+                    .html(region[i])
+                    .appendTo(dropdown_el);
+                }
+            }
+        });
+    }
+    function region(){
+        var dropdown_el = $('#region_dropdown');
+        dropdown_el.html('');
+        $.ajax({
+            url: '/dropdown?column=region',
+            type: 'GET',
+            success: function(response){
+                region_true = [];
+                for(var i=0; i < response.lenght; i++){
+                    region_true.push(response[i]['region'])
+                }
+            }
+        });
+    }
 </script>
