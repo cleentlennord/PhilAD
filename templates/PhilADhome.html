@@ -182,7 +182,7 @@
             <!-- Dropdown list City -->
             <div class="col-md-2" >
               <div class="form-group">
-                <select  class="form-control" style="text-transform: uppercase;">
+                <select id="city_dropdown" class="form-control" style="text-transform: uppercase;">
                   <option value="">...</option>
                 </select>
               </div>
@@ -191,7 +191,7 @@
             <!-- Dropdown list Province -->
             <div class="col-md-2" >
               <div class="form-group">
-                <select  class="form-control" style="text-transform: uppercase;">
+                <select id="province_dropdown" class="form-control" style="text-transform: uppercase;">
                   <option value="">...</option>
                 </select>
               </div>
@@ -200,7 +200,7 @@
             <!-- Dropdown list Region -->
             <div class="col-md-2" >
               <div class="form-group">
-                <select  class="form-control" style="text-transform: uppercase;">
+                <select id="region_dropdown" class="form-control" style="text-transform: uppercase;">
                   <option value="">...</option>
                 </select>
               </div>
@@ -209,7 +209,7 @@
             <!-- Dropdown list Postal Code -->
             <div class="col-md-2" >
               <div class="form-group">
-                <select  class="form-control" style="text-transform: uppercase;">
+                <select id="postal_dropdown" class="form-control" style="text-transform: uppercase;">
                   <option value="">...</option>
                 </select>
               </div>
@@ -278,20 +278,54 @@
             // stop link reloading the page
          event.preventDefault();
         }
-    };
-    $('#barangay').onChange = function(){
-      $.ajax({
-        url: '/dropdown',
-        data: { input: $('#barangay').value,
-              column: $('#barangay')}
-        ,
-        type: 'GET',
-        success: function(response){
-          $.each(response, function(i, barangay){
-            $('#barangay_dropdown').append("<option value'")+response[i].column+("'</option>");
-          });
-        }
-      });
-    }
 
+        // Setup mo dito lahat ng onChange listeners
+        // Barangay field to right? then matic dapat na column nya is barangay
+        // note na barangay level palang to, bahala ka na kung gagawa ka ng next levels
+        $('#barangay').on('keyup', function(){
+
+            // Get barangay field value
+            var barangay = $('#barangay').val();
+
+            $.ajax({
+                url: '/dropdown?column=barangay&input=' + barangay,
+                type: 'GET',
+                success: function(response){
+
+                    // parse mo muna si response para maging JSON
+                    response = JSON.parse(response);
+
+                    // lahat ng content ng response iloop mo
+                    response.forEach(function(item, index){
+
+                        // Gawa ka option for each DROPDOWN syempre mula barangay and so on
+                        // kapag city level mula naman city and so on
+                        var newOption = new Option(item.barangay, index, false, false);
+                        $('#barangay_dropdown').append(newOption).trigger('change');
+
+                        var newOption = new Option(item.city, index, false, false);
+                        $('#city_dropdown').append(newOption).trigger('change');
+
+                        var newOption = new Option(item.province, index, false, false);
+                        $('#province_dropdown').append(newOption).trigger('change');
+
+                        var newOption = new Option(item.region, index, false, false);
+                        $('#region_dropdown').append(newOption).trigger('change');
+
+                        var newOption = new Option(item.postal, index, false, false);
+                        $('#postal_dropdown').append(newOption).trigger('change');
+                    });
+                    // response, function(i, item){
+                    //     console.log(item);
+                    //     // $('#barangay_dropdown').append("<option value'")+response[i].column+("'</option>");
+                    // });
+
+                },
+                error: function(error) {
+                    console.log(error);
+                }
+            });
+        });
+
+    };
 </script>
