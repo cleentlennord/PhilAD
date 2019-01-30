@@ -64,7 +64,7 @@
 
             <!-- Side spacer for text area label row -->
             <div class="col-sm-1">
-              <div class="form-group"></div>             
+              <div class="form-group"></div>
             </div>
 
             <!-- Address components text area label Barangay -->
@@ -104,12 +104,12 @@
 
             <!-- Side spacer for text area label row -->
             <div class="col-sm-1">
-              <div class="form-group"></div>             
+              <div class="form-group"></div>
             </div>
 
             <!-- Side spacer for text area row -->
             <div class="col-sm-1">
-              <div class="form-group"></div>             
+              <div class="form-group"></div>
             </div>
 
             <!-- Address components text area Barangay -->
@@ -149,7 +149,7 @@
 
             <!-- Side spacer for dropdown textarea row -->
             <div class="col-sm-1">
-              <div class="form-group"></div>             
+              <div class="form-group"></div>
             </div>
 
             <!-- Division separator -->
@@ -167,13 +167,13 @@
 
             <!-- Side spacer for dropdown row -->
             <div class="col-sm-1">
-              <div class="form-group"></div>             
+              <div class="form-group"></div>
             </div>
 
             <!-- Dropdown list Barangay -->
             <div class="col-md-2" >
               <div class="form-group">
-                <select  class="form-control" style="text-transform: uppercase;">
+                <select id="barangay_dropdown" class="form-control" style="text-transform: uppercase;">
                   <option value="">...</option>
                 </select>
               </div>
@@ -217,7 +217,7 @@
 
             <!-- Side spacer for dropdown row -->
             <div class="col-sm-1">
-              <div class="form-group"></div>             
+              <div class="form-group"></div>
             </div>
 
             <!-- Division separator -->
@@ -230,7 +230,7 @@
               </div>
             </div>
 
-   
+
   </div>
 
 </body>
@@ -270,23 +270,6 @@
                                 break;
                         }
                     }
-
-                    // try:
-                    //   if (output.items = output['barangay']){
-                    //     $('#barangay') = output['barangay']
-                    //   }
-                    //   if (output.items = output['city']){
-                    //     $('#city') = output['city']
-                    //   }
-                    //   if (output.items = output['province']){
-                    //     output['province'] = ('#province')
-                    //   }
-                    //   if (output.items = output['region']){
-                    //     output['region'] = ('#region')
-                    //   }
-                    //   else {
-                    //     console.error('no data found');
-                    //   }
                 },
                 error: function(error) {
                     console.log(error);
@@ -296,4 +279,19 @@
          event.preventDefault();
         }
     };
+    $('#barangay').onChange = function(){
+      $.ajax({
+        url: '/dropdown',
+        data: { input: $('#barangay').value,
+              column: $('#barangay')}
+        ,
+        type: 'GET',
+        success: function(response){
+          $.each(response, function(i, barangay){
+            $('#barangay_dropdown').append("<option value'")+response[i].column+("'</option>");
+          });
+        }
+      });
+    }
+
 </script>

@@ -16,7 +16,7 @@ ct_reloaded.set_model_file('ncr_test.model')
 app.config['SECRET_KEY'] = '601bbfb9d4c8e0a4a0a66d8f9b2f79cd'
 
 # SET UP DROPDOWN
-LOOKUP = pd.read_excel('data_lookup.xlsx')
+LOOKUP = pd.read_excel('ncr_lookup.xlsx')
 
 @app.route('/dropdown', methods=['GET'])
 def dropdown():
